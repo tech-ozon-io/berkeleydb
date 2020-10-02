@@ -14,14 +14,14 @@ func TestNewEnvironment(t *testing.T) {
 	if err != nil && os.IsNotExist(err) {
 		e := os.Mkdir(TestDirectory, os.ModeDir|os.ModePerm)
 		if e != nil {
-			t.Fatal("Failed to create directory: %s", e)
+			t.Fatalf("Failed to create directory: %s", e)
 		}
 	}
 
 	_, err = berkeleydb.NewEnvironment()
 
 	if err != nil {
-		t.Error("Expected environment, got %s", err)
+		t.Errorf("Expected environment, got %s", err)
 	}
 
 }
@@ -30,12 +30,12 @@ func TestOpenEnvironment(t *testing.T) {
 	env, _ := berkeleydb.NewEnvironment()
 	err := env.Open(TestDirectory, berkeleydb.DbCreate|berkeleydb.DbInitMpool, 0)
 	if err != nil {
-		t.Error("Expected to open DB, got %s", err)
+		t.Errorf("Expected to open DB, got %s", err)
 	}
 
 	err = env.Close()
 	if err != nil {
-		t.Error("Expected to close DB, got %s", err)
+		t.Errorf("Expected to close DB, got %s", err)
 	}
 }
 
@@ -71,12 +71,12 @@ func TestOpenDBInEnvironment(t *testing.T) {
 
 	err = env.Close()
 	if err != nil {
-		t.Error("Expected to close DB, got %s", err)
+		t.Errorf("Expected to close DB, got %s", err)
 	}
 }
 func TestTeardown(t *testing.T) {
 	err := os.RemoveAll(TestDirectory)
 	if err != nil {
-		t.Fatal("Expected to remove fixtures, got %s", err)
+		t.Fatalf("Expected to remove fixtures, got %s", err)
 	}
 }
